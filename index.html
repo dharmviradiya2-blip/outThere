@@ -1,116 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>outThere — Pre-register</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  .wrap { max-width: 480px; margin: 0 auto; padding: 2rem 1rem; font-family: var(--font-sans); }
-  .brand { font-size: 28px; font-weight: 500; color: var(--color-text-primary); letter-spacing: -0.5px; margin-bottom: 4px; }
-  .tagline { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 2rem; }
-  .field { margin-bottom: 1.25rem; }
-  .field label { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
-  .field input, .field select { width: 100%; padding: 10px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-primary); font-size: 15px; font-family: var(--font-sans); outline: none; transition: border-color 0.15s; }
-  .field input:focus, .field select:focus { border-color: #1D9E75; box-shadow: 0 0 0 3px rgba(29,158,117,0.12); }
-  .submit { width: 100%; padding: 13px; background: #1D9E75; color: #fff; border: none; border-radius: var(--border-radius-md); font-size: 15px; font-weight: 500; cursor: pointer; margin-top: 1.5rem; transition: background 0.15s; font-family: var(--font-sans); }
-  .submit:hover { background: #0F6E56; }
-  .submit:disabled { background: #9FE1CB; cursor: not-allowed; }
-  .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 1.75rem 0; }
-  .success { text-align: center; padding: 3rem 1rem; display: none; }
-  .success .icon { font-size: 40px; color: #1D9E75; margin-bottom: 14px; }
-  .success h2 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
-  .success p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; }
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .error { font-size: 13px; color: #E24B4A; margin-top: 8px; display: none; }
-</style>
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #F5F4F0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
 
-<h2 class="sr-only">outThere pre-registration form</h2>
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      border: 0.5px solid #e0dfd8;
+      padding: 2.5rem 2rem;
+      width: 100%;
+      max-width: 460px;
+    }
 
-<div class="wrap" id="formView">
-  <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
-    <div style="width:36px;height:36px;background:#1D9E75;border-radius:10px;display:flex;align-items:center;justify-content:center;">
-      <i class="ti ti-compass" style="color:#fff;font-size:18px;" aria-hidden="true"></i>
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .logo-icon {
+      width: 36px;
+      height: 36px;
+      background: #1D9E75;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .logo-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .brand {
+      font-size: 26px;
+      font-weight: 500;
+      color: #1a1a1a;
+      letter-spacing: -0.5px;
+    }
+
+    .tagline {
+      font-size: 14px;
+      color: #888;
+      margin-bottom: 2rem;
+    }
+
+    .divider {
+      height: 0.5px;
+      background: #e8e7e0;
+      margin: 1.5rem 0;
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .field {
+      margin-bottom: 1.25rem;
+    }
+
+    .field label {
+      display: block;
+      font-size: 11px;
+      font-weight: 500;
+      color: #999;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 10px 14px;
+      border: 0.5px solid #d4d3cc;
+      border-radius: 8px;
+      background: #fff;
+      color: #1a1a1a;
+      font-size: 15px;
+      font-family: 'DM Sans', sans-serif;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: #1D9E75;
+      box-shadow: 0 0 0 3px rgba(29, 158, 117, 0.12);
+    }
+
+    .field input::placeholder {
+      color: #bbb;
+    }
+
+    .select-wrap {
+      position: relative;
+    }
+
+    .select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 0;
+      height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid #999;
+      pointer-events: none;
+    }
+
+    .submit {
+      width: 100%;
+      padding: 13px;
+      background: #1D9E75;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.15s;
+      font-family: 'DM Sans', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .submit:hover { background: #0F6E56; }
+    .submit:disabled { background: #9FE1CB; cursor: not-allowed; }
+
+    .submit svg {
+      width: 16px;
+      height: 16px;
+      stroke: #fff;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .error {
+      font-size: 13px;
+      color: #E24B4A;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .success {
+      text-align: center;
+      padding: 2rem 0;
+      display: none;
+    }
+
+    .success-icon {
+      width: 52px;
+      height: 52px;
+      background: #E1F5EE;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .success-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #1D9E75;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .success h2 {
+      font-size: 20px;
+      font-weight: 500;
+      color: #1a1a1a;
+      margin-bottom: 8px;
+    }
+
+    .success p {
+      font-size: 14px;
+      color: #888;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 480px) {
+      .row { grid-template-columns: 1fr; }
+      .card { padding: 2rem 1.25rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div id="formView">
+      <div class="logo-row">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        </div>
+        <span class="brand">outThere</span>
+      </div>
+      <p class="tagline">Your city is full of people. Stop scrolling. Start questing.</p>
+
+      <div class="divider"></div>
+
+      <div class="row">
+        <div class="field">
+          <label>First name</label>
+          <input type="text" id="fname" placeholder="Aryan" />
+        </div>
+        <div class="field">
+          <label>Last name</label>
+          <input type="text" id="lname" placeholder="Shah" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="you@gmail.com" />
+      </div>
+
+      <div class="field">
+        <label>Phone (optional)</label>
+        <input type="tel" id="phone" placeholder="+91 98765 43210" />
+      </div>
+
+      <div class="field">
+        <label>How did you hear about us?</label>
+        <div class="select-wrap">
+          <select id="source">
+            <option value="">Select one</option>
+            <option>Reddit</option>
+            <option>Instagram</option>
+            <option>Twitter / X</option>
+            <option>Friend told me</option>
+            <option>WhatsApp</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="error" id="errMsg"></p>
+
+      <button class="submit" id="submitBtn" onclick="submitForm()">
+        Count me in
+        <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </button>
     </div>
-    <span class="brand">outThere</span>
-  </div>
-  <p class="tagline">Your city is full of people. Stop scrolling. Start questing.</p>
 
-  <div class="divider"></div>
-
-  <div class="row">
-    <div class="field">
-      <label>First name</label>
-      <input type="text" id="fname" placeholder="Aryan" />
-    </div>
-    <div class="field">
-      <label>Last name</label>
-      <input type="text" id="lname" placeholder="Shah" />
+    <div class="success" id="successView">
+      <div class="success-icon">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>You're on the list</h2>
+      <p>We'll hit you up when outThere goes live.<br/>Get ready to actually go out.</p>
     </div>
   </div>
 
-  <div class="field">
-    <label>Email</label>
-    <input type="email" id="email" placeholder="you@gmail.com" />
-  </div>
+  <script>
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbymqQkFeovTbJSwObo_FSyONwwNR6NE9L1gx1YZZ5PH9Vx9ssKYnn4nhadS9M3G_-yz/exec";
 
-  <div class="field">
-    <label>Phone (optional)</label>
-    <input type="tel" id="phone" placeholder="+91 98765 43210" />
-  </div>
+    async function submitForm() {
+      const fname = document.getElementById('fname').value.trim();
+      const lname = document.getElementById('lname').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const source = document.getElementById('source').value;
+      const errMsg = document.getElementById('errMsg');
+      const btn = document.getElementById('submitBtn');
 
-  <div class="field">
-    <label>How did you hear about us?</label>
-    <select id="source">
-      <option value="">Select one</option>
-      <option>Reddit</option>
-      <option>Instagram</option>
-      <option>Twitter / X</option>
-      <option>Friend told me</option>
-      <option>WhatsApp</option>
-      <option>Other</option>
-    </select>
-  </div>
+      errMsg.style.display = 'none';
 
-  <p class="error" id="errMsg"></p>
-  <button class="submit" id="submitBtn" onclick="submitForm()">Count me in <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
-</div>
+      if (!fname) { errMsg.textContent = 'Please enter your first name.'; errMsg.style.display = 'block'; return; }
+      if (!email || !email.includes('@')) { errMsg.textContent = 'Please enter a valid email.'; errMsg.style.display = 'block'; return; }
 
-<div class="success" id="successView">
-  <div class="icon"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
-  <h2>You're on the list</h2>
-  <p>We'll hit you up when outThere goes live.<br/>Get ready to actually go out.</p>
-</div>
+      btn.disabled = true;
+      btn.textContent = 'Saving...';
 
-<script>
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbycKYDLYaylK0sO7LTo9Ij55WQ08sbPjNkPzU-qqwU9waYi5JSy3119RjyuT-ODv6AO/exec";
-
-async function submitForm() {
-  const fname = document.getElementById('fname').value.trim();
-  const lname = document.getElementById('lname').value.trim();
-  const email = document.getElementById('email').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const source = document.getElementById('source').value;
-  const errMsg = document.getElementById('errMsg');
-  const btn = document.getElementById('submitBtn');
-
-  errMsg.style.display = 'none';
-
-  if (!fname) { errMsg.textContent = 'Please enter your first name.'; errMsg.style.display = 'block'; return; }
-  if (!email || !email.includes('@')) { errMsg.textContent = 'Please enter a valid email.'; errMsg.style.display = 'block'; return; }
-
-  btn.disabled = true;
-  btn.textContent = 'Saving...';
-
-  try {
-    await fetch(SHEET_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ fname, lname, email, phone, source, timestamp: new Date().toISOString() })
-    });
-    document.getElementById('formView').style.display = 'none';
-    document.getElementById('successView').style.display = 'block';
-  } catch(e) {
-    errMsg.textContent = 'Something went wrong. Please try again.';
-    errMsg.style.display = 'block';
-    btn.disabled = false;
-    btn.innerHTML = 'Count me in <i class="ti ti-arrow-right" aria-hidden="true"></i>';
-  }
-}
-</script>
+      try {
+        await fetch(SHEET_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ fname, lname, email, phone, source, timestamp: new Date().toISOString() })
+        });
+        document.getElementById('formView').style.display = 'none';
+        document.getElementById('successView').style.display = 'block';
+      } catch(e) {
+        errMsg.textContent = 'Something went wrong. Please try again.';
+        errMsg.style.display = 'block';
+        btn.disabled = false;
+        btn.innerHTML = 'Count me in <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+      }
+    }
+  </script>
+</body>
+</html>
