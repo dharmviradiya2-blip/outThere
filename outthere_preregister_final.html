@@ -1,0 +1,116 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  .wrap { max-width: 480px; margin: 0 auto; padding: 2rem 1rem; font-family: var(--font-sans); }
+  .brand { font-size: 28px; font-weight: 500; color: var(--color-text-primary); letter-spacing: -0.5px; margin-bottom: 4px; }
+  .tagline { font-size: 14px; color: var(--color-text-secondary); margin-bottom: 2rem; }
+  .field { margin-bottom: 1.25rem; }
+  .field label { display: block; font-size: 13px; font-weight: 500; color: var(--color-text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .field input, .field select { width: 100%; padding: 10px 14px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-primary); font-size: 15px; font-family: var(--font-sans); outline: none; transition: border-color 0.15s; }
+  .field input:focus, .field select:focus { border-color: #1D9E75; box-shadow: 0 0 0 3px rgba(29,158,117,0.12); }
+  .submit { width: 100%; padding: 13px; background: #1D9E75; color: #fff; border: none; border-radius: var(--border-radius-md); font-size: 15px; font-weight: 500; cursor: pointer; margin-top: 1.5rem; transition: background 0.15s; font-family: var(--font-sans); }
+  .submit:hover { background: #0F6E56; }
+  .submit:disabled { background: #9FE1CB; cursor: not-allowed; }
+  .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 1.75rem 0; }
+  .success { text-align: center; padding: 3rem 1rem; display: none; }
+  .success .icon { font-size: 40px; color: #1D9E75; margin-bottom: 14px; }
+  .success h2 { font-size: 22px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+  .success p { font-size: 14px; color: var(--color-text-secondary); line-height: 1.6; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .error { font-size: 13px; color: #E24B4A; margin-top: 8px; display: none; }
+</style>
+
+<h2 class="sr-only">outThere pre-registration form</h2>
+
+<div class="wrap" id="formView">
+  <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+    <div style="width:36px;height:36px;background:#1D9E75;border-radius:10px;display:flex;align-items:center;justify-content:center;">
+      <i class="ti ti-compass" style="color:#fff;font-size:18px;" aria-hidden="true"></i>
+    </div>
+    <span class="brand">outThere</span>
+  </div>
+  <p class="tagline">Your city is full of people. Stop scrolling. Start questing.</p>
+
+  <div class="divider"></div>
+
+  <div class="row">
+    <div class="field">
+      <label>First name</label>
+      <input type="text" id="fname" placeholder="Aryan" />
+    </div>
+    <div class="field">
+      <label>Last name</label>
+      <input type="text" id="lname" placeholder="Shah" />
+    </div>
+  </div>
+
+  <div class="field">
+    <label>Email</label>
+    <input type="email" id="email" placeholder="you@gmail.com" />
+  </div>
+
+  <div class="field">
+    <label>Phone (optional)</label>
+    <input type="tel" id="phone" placeholder="+91 98765 43210" />
+  </div>
+
+  <div class="field">
+    <label>How did you hear about us?</label>
+    <select id="source">
+      <option value="">Select one</option>
+      <option>Reddit</option>
+      <option>Instagram</option>
+      <option>Twitter / X</option>
+      <option>Friend told me</option>
+      <option>WhatsApp</option>
+      <option>Other</option>
+    </select>
+  </div>
+
+  <p class="error" id="errMsg"></p>
+  <button class="submit" id="submitBtn" onclick="submitForm()">Count me in <i class="ti ti-arrow-right" aria-hidden="true"></i></button>
+</div>
+
+<div class="success" id="successView">
+  <div class="icon"><i class="ti ti-circle-check" aria-hidden="true"></i></div>
+  <h2>You're on the list</h2>
+  <p>We'll hit you up when outThere goes live.<br/>Get ready to actually go out.</p>
+</div>
+
+<script>
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbycKYDLYaylK0sO7LTo9Ij55WQ08sbPjNkPzU-qqwU9waYi5JSy3119RjyuT-ODv6AO/exec";
+
+async function submitForm() {
+  const fname = document.getElementById('fname').value.trim();
+  const lname = document.getElementById('lname').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const source = document.getElementById('source').value;
+  const errMsg = document.getElementById('errMsg');
+  const btn = document.getElementById('submitBtn');
+
+  errMsg.style.display = 'none';
+
+  if (!fname) { errMsg.textContent = 'Please enter your first name.'; errMsg.style.display = 'block'; return; }
+  if (!email || !email.includes('@')) { errMsg.textContent = 'Please enter a valid email.'; errMsg.style.display = 'block'; return; }
+
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  try {
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fname, lname, email, phone, source, timestamp: new Date().toISOString() })
+    });
+    document.getElementById('formView').style.display = 'none';
+    document.getElementById('successView').style.display = 'block';
+  } catch(e) {
+    errMsg.textContent = 'Something went wrong. Please try again.';
+    errMsg.style.display = 'block';
+    btn.disabled = false;
+    btn.innerHTML = 'Count me in <i class="ti ti-arrow-right" aria-hidden="true"></i>';
+  }
+}
+</script>
